@@ -1,5 +1,5 @@
 from django.contrib import admin
-from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase
+from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase, BatchJob
 
 # Register your models here.
 
@@ -17,14 +17,14 @@ class GuestAdmin(admin.ModelAdmin):
 
 
 class ProjectInfoAdmin(admin.ModelAdmin):
-    list_display = ['project_name', 'parent_id', 'project_type', 'create_time', 'validate_state']
+    list_display = ['project_name', 'parent_id', 'project_type', 'create_time']
     search_fields = ['project_name']
     list_filter = ['validate_state']
 
 
 class InterfaceInfoAdmin(admin.ModelAdmin):
     list_display = ['project', 'interface_code', 'interface_name', 'interface_type', 'request_type', 'byref_type',
-                    'request_url', 'remarks', 'create_time', 'validate_state']
+                    'request_url', 'remarks', 'create_time']
     search_fields = ['interface_code', 'interface_name', 'project']
     list_filter = ['validate_state']
 
@@ -32,20 +32,26 @@ class InterfaceInfoAdmin(admin.ModelAdmin):
 class InterfaceFieldAdmin(admin.ModelAdmin):
     list_display = ['interface', 'field_value', 'field_name', 'type', 'length', 'belong_list',
                     'belong_dict', 'dependent_field', 'dependent_value', 'is_null', 'default_value',
-                    'remarks', 'create_time', 'validate_state']
+                    'remarks', 'create_time']
     search_fields = ['interface_code', 'field_value', 'field_name', 'interface']
     list_filter = ['validate_state']
 
 
 class PublicRuleAdmin(admin.ModelAdmin):
     list_display = ['rules_name', 'rules_type', 'data_format', 'rule_comment',
-                    'remarks', 'create_time', 'validate_state']
+                    'remarks', 'create_time']
     search_fields = ['rules_name', 'rules_type', 'data_format']
     list_filter = ['validate_state']
 
 
 class PublicCaseAdmin(admin.ModelAdmin):
-    list_display = ['case_name', 'field_id', 'rule_id', 'version', 'create_time', 'validate_state']
+    list_display = ['case_name', 'field_id', 'rule_id', 'version', 'create_time']
+    search_fields = ['case_name', 'field_id', 'rule_id']
+    list_filter = ['validate_state']
+
+
+class BatchJobAdmin(admin.ModelAdmin):
+    list_display = ['id', 'batch_status', 'start_time', 'finish_time', 'execute_frequency', 'create_time']
     search_fields = ['case_name', 'field_id', 'rule_id']
     list_filter = ['validate_state']
 
@@ -57,3 +63,4 @@ admin.site.register(InterfaceInfo, InterfaceInfoAdmin)              # 注册接�
 admin.site.register(InterfaceField, InterfaceFieldAdmin)            # 注册接口字段信息InterfaceField，才可以直接在后台进行管理
 admin.site.register(PublicRule, PublicRuleAdmin)                    # 注册公共规则PublicRule，才可以直接在后台进行管理
 admin.site.register(PublicCase, PublicCaseAdmin)                    # 注册公共规则PublicCase，才可以直接在后台进行管理
+admin.site.register(BatchJob, BatchJobAdmin)                        # 注册公共规则PublicCase，才可以直接在后台进行管理

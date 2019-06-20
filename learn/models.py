@@ -129,3 +129,18 @@ class PublicCase(models.Model):
 
     def __str__(self):
         return self.case_name
+
+
+# 批次任务表
+class BatchJob(models.Model):
+    batch_status = models.CharField(max_length=2, verbose_name='批次状态', blank=True)
+    # 批次状态(0：初始录入，1：执行中，2：执行完成，3：执行失败)
+    start_time = models.DateTimeField(auto_now_add=True, verbose_name='执行开始时间')    # auto_now_add
+    finish_time = models.DateTimeField(verbose_name='执行结束时间')
+    execute_frequency = models.IntegerField(verbose_name='执行次数')
+    remarks = models.CharField(max_length=200, verbose_name='备注', blank=True)
+    validate_state = models.BooleanField(verbose_name='是否有效')
+    create_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.id
