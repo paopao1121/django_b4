@@ -90,9 +90,26 @@ class InterfaceField(models.Model):
     def __str__(self):
         return self.field_value
 
-'''
+
 # 公共规则表
 class PublicRule(models.Model):
-    rules_name = models.CharField(max_length=100, verbose_name='规则名称')
-    rules_type = models.CharField(max_length=100, verbose_name='规则类型')  # 规则类型(1：数据类型规则，2：基础校验规则)
-'''
+    rules_name = models.CharField(max_length=40, verbose_name='规则名称')
+    rules_type = models.CharField(max_length=10, verbose_name='规则类型')  # 规则类型(1：数据类型规则，2：基础校验规则)
+    data_format = models.CharField(max_length=40, verbose_name='数据格式')
+    rule_comment = models.CharField(max_length=100, verbose_name='规则描述', blank=True)
+    regexp_1 = models.CharField(max_length=100, verbose_name='正则表达式1', blank=True)
+    regexp_2 = models.CharField(max_length=100, verbose_name='正则表达式2', blank=True)
+    regexp_3 = models.CharField(max_length=100, verbose_name='正则表达式3', blank=True)
+    regexp_4 = models.CharField(max_length=100, verbose_name='正则表达式4', blank=True)
+    regexp_5 = models.CharField(max_length=100, verbose_name='正则表达式5', blank=True)
+    regexp_6 = models.CharField(max_length=100, verbose_name='正则表达式6', blank=True)
+    regexp_7 = models.CharField(max_length=100, verbose_name='正则表达式7', blank=True)
+    regexp_8 = models.CharField(max_length=100, verbose_name='正则表达式8', blank=True)
+    regexp_9 = models.CharField(max_length=100, verbose_name='正则表达式9', blank=True)
+    regexp_10 = models.CharField(max_length=100, verbose_name='正则表达式10', blank=True)
+    remarks = models.CharField(max_length=200, verbose_name='备注', blank=True)
+    validate_state = models.BooleanField(verbose_name='是否有效')
+    create_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.rules_name
