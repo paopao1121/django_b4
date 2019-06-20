@@ -33,4 +33,7 @@ urlpatterns = [
 
     path('project_manage/', views.project_manage),                                  # 项目管理
     path('search_project/', views.search_project),                                  # 项目搜索
+
+    path('interface_manage/', views.interface_manage),                              # 接口管理
+    path('search_interface/', views.search_interface),                              # 接口搜索
 ]

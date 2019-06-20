@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from learn.models import Event, Guest, ProjectInfo
+from learn.models import Event, Guest, ProjectInfo, InterfaceInfo
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 # Create your views here.
 
 
@@ -31,6 +32,14 @@ def login_action(request):
             return render(request, 'index.html', {'error': 'username or password error!'})
 
 
+# 退出函数
+@login_required
+def logout(request):
+    auth.logout(request)                            # 退出登录
+    response = HttpResponseRedirect('/index/')
+    return response
+
+
 # 发布会管理
 @login_required
 def event_manege(request):
@@ -40,7 +49,16 @@ def event_manege(request):
     return render(request, "event_manage.html", {"user": username, "events": event_list})
 
 
-
+# 发布会名称搜索
+@login_required
+def search_name(request):
+    username = request.session.get('user', '')
+    search_name = request.GET.get("name", "")
+    print(username)
+    print(search_name)
+    event_list = Event.objects.filter(name__contains=search_name)
+    print(event_list)
+    return render(request, "event_manage.html", {"user": username, "events": event_list})
 
 
 # 嘉宾管理
@@ -71,10 +89,13 @@ def search_guest(request):
     # print(username)
     # print(search_name)
     search_phone = request.GET.get("phone", "")
+    search_realname = request.GET.get("realname", "")
     # search_name_bytes = search_phone.encode(encoding="utf-8")                              # 这句不用加了
     # search_guest = request.GET.get("realname", "")
     # print(search_guest)
     guest_list = Guest.objects.filter(phone__contains=search_phone)
+    # guest_list = Guest.objects.filter(Q(phone__contains=search_phone) | Q(realname__contains=search_realname))
+    print("这是guest_list-------------------------------")
     print(guest_list)
     paginator = Paginator(guest_list, 5)                                                    # 创建每页5条数据的分页器
     print(paginator)
@@ -87,7 +108,7 @@ def search_guest(request):
     except EmptyPage:
         # 如果page不在范围，取最后一页面数据
         contacts = paginator.page(paginator.num_pages)
-    print(guest_list)
+    # print(guest_list)
     return render(request, "guest_manage.html", {"user": username,
                                                  "guests": contacts,
                                                  "phone": search_phone})
@@ -113,14 +134,6 @@ def sign_index_action(request, eid):
         return render(request, 'sign_index.html', {'event': event, 'hint': 'sign in.success.', 'guest': result})
 
 
-# 退出函数
-@login_required
-def logout(request):
-    auth.logout(request)                            # 退出登录
-    response = HttpResponseRedirect('/index/')
-    return response
-
-
 # 项目管理
 @login_required
 def project_manage(request):
@@ -143,13 +156,19 @@ def search_project(request):
     return render(request, "project_manage.html", {"user": username, "projects": project_list})
 
 
-# 发布会名称搜索
+# 接口管理
 @login_required
-def search_name(request):
+def interface_manage(request):
+    interface_list = InterfaceInfo.objects.all()
+    # username = request.COOKIES.get('user', '')  # 读取浏览器cookie
+    username = request.session.get('user', '')  # 读取浏览器session
+    return render(request, "interface_manage.html", {"user": username, "interfaces": interface_list})
+
+
+# 接口查询
+@login_required
+def search_interface(request):
     username = request.session.get('user', '')
-    search_name = request.GET.get("name", "")
-    print(username)
-    print(search_name)
-    event_list = Event.objects.filter(name__contains=search_name)
-    print(event_list)
-    return render(request, "event_manage.html", {"user": username, "events": event_list})
+    search_interface = request.GET.get("interface_name", "")
+    interface_list = ProjectInfo.objects.filter(interface_name__contains=search_interface)
+    return render(request, "project_manage.html", {"user": username, "interfaces": interface_list})
