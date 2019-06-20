@@ -1,0 +1,70 @@
+<html lang="zh-CN">
+    <head>
+        {% load bootstrap3 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <title>Project Manage</title>
+    </head>
+
+    <body role="document">
+        <!-- 导航栏 -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/project_manage/">AutoTest Engine System</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">项目管理</a></li>
+                        <li><a href="/event_manage/">发布会</a></li>
+                        <li><a href="/guest_manage/">嘉宾</a></li>
+                    </ul>
+                      <ul class="nav navbar-nav navbar-right">
+                          <li><a href="#">{{ user }}</a></li>
+                          <li><a href="/logout/">退出</a></li>
+                     </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 项目管理搜索表单 -->
+        <div class="page-header" style="padding-top: 60px;">
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form" method="get" action="/search_project/">
+                    <div class="form-group">
+                        <input name="project_name" type="text" placeholder="项目名称" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">搜索</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 项目列表 -->
+        <div class="row" style="padding-top: 80px;">
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>项目名称</th>
+                            <th>归属条线</th>
+                            <th>项目类型</th>
+                            <th>创建时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in projects %}
+                            <tr>
+                                <td>{{ project.id }}</td>
+                                <td>{{ project.project_name }}</td>
+                                <td>{{ project.parent_id }}</td>
+                                <td>{{ project.project_type }}</td>
+                                <td>{{ project.create_time }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
