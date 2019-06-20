@@ -120,8 +120,8 @@ class PublicCase(models.Model):
     field_id = models.ForeignKey(InterfaceField, on_delete=models.CASCADE)
     rule_id = models.ForeignKey(PublicRule, on_delete=models.CASCADE)
     case_name = models.CharField(max_length=100, verbose_name='用例名称', blank=True)
-    request_json = models.TextField(max_length=4000, verbose_name='请求报文', blank=True)
-    response_json = models.TextField(max_length=4000, verbose_name='响应报文', blank=True)
+    request_json = models.TextField(max_length=4000, verbose_name='请求报文模板', blank=True)
+    response_json = models.TextField(max_length=4000, verbose_name='响应报文模板', blank=True)
     version = models.CharField(max_length=10, verbose_name='用例版本号', blank=True)
     remarks = models.CharField(max_length=200, verbose_name='备注', blank=True)
     validate_state = models.BooleanField(verbose_name='是否有效')
@@ -138,6 +138,22 @@ class BatchJob(models.Model):
     start_time = models.DateTimeField(auto_now_add=True, verbose_name='执行开始时间')    # auto_now_add
     finish_time = models.DateTimeField(verbose_name='执行结束时间')
     execute_frequency = models.IntegerField(verbose_name='执行次数')
+    remarks = models.CharField(max_length=200, verbose_name='备注', blank=True)
+    validate_state = models.BooleanField(verbose_name='是否有效')
+    create_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.id
+
+
+# 批次用例表
+class BatchCase(models.Model):
+    public_case_id = models.ForeignKey(PublicCase, on_delete=models.CASCADE)
+    job_id = models.ForeignKey(BatchJob, on_delete=models.CASCADE)
+    case_status = models.CharField(max_length=2, verbose_name='用例状态', blank=True)
+    # 用例状态(0：初始录入，1：执行中，2：成功，3：失败，4：人工判定)
+    request_json = models.TextField(max_length=4000, verbose_name='请求报文', blank=True)
+    response_json = models.TextField(max_length=4000, verbose_name='响应报文', blank=True)
     remarks = models.CharField(max_length=200, verbose_name='备注', blank=True)
     validate_state = models.BooleanField(verbose_name='是否有效')
     create_time = models.DateTimeField(auto_now=True)
