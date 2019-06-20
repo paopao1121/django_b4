@@ -3,7 +3,7 @@
         {% load bootstrap3 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
-        <title>Project Manage</title>
+        <title>Interface Manage</title>
     </head>
 
     <body role="document">
@@ -76,6 +76,20 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <!-- 列表分页器 -->
+        <div class="paginator">
+            <span class="step-links">
+                {% if interfaces.has_previous %}
+                    <a href="?page={{ interfaces.previous_page_number }}">previous</a>
+                {% endif %}
+                    <span class="current">
+                        Page {{ interfaces.number }} of {{ interfaces.paginator.num_pages }}.
+                    </span>
+                {% if interfaces.has_next %}
+                    <a href="?page={{ interfaces.next_page_number }}">next</a>
+                {% endif %}
+            </span>
         </div>
     </body>
 </html>

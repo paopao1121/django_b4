@@ -162,7 +162,17 @@ def interface_manage(request):
     interface_list = InterfaceInfo.objects.all()
     # username = request.COOKIES.get('user', '')  # 读取浏览器cookie
     username = request.session.get('user', '')  # 读取浏览器session
-    return render(request, "interface_manage.html", {"user": username, "interfaces": interface_list})
+    paginator = Paginator(interface_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "interface_manage.html", {"user": username, "interfaces": contacts})
 
 
 # 接口查询
@@ -170,5 +180,15 @@ def interface_manage(request):
 def search_interface(request):
     username = request.session.get('user', '')
     search_interface = request.GET.get("interface_name", "")
-    interface_list = ProjectInfo.objects.filter(interface_name__contains=search_interface)
-    return render(request, "project_manage.html", {"user": username, "interfaces": interface_list})
+    interface_list = InterfaceInfo.objects.filter(interface_name__contains=search_interface)
+    paginator = Paginator(interface_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "interface_manage.html", {"user": username, "interfaces": contacts})
