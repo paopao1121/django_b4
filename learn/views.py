@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from learn.models import Event, Guest
+from learn.models import Event, Guest, ProjectInfo
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
@@ -128,3 +128,24 @@ def logout(request):
     auth.logout(request)                            # 退出登录
     response = HttpResponseRedirect('/index/')
     return response
+
+
+# 项目管理
+@login_required
+def project_manage(request):
+    project_list = ProjectInfo.objects.all()
+    # username = request.COOKIES.get('user', '')  # 读取浏览器cookie
+    username = request.session.get('user', '')  # 读取浏览器session
+    return render(request, "project_manage.html", {"user": username, "projects": project_list})
+
+
+# 项目搜索
+@login_required
+def search_name(request):
+    username = request.session.get('user', '')
+    search_name = request.GET.get("name", "")
+    print(username)
+    print(search_name)
+    project_list = ProjectInfo.objects.filter(name__contains=search_name)
+    print(project_list)
+    return render(request, "project_manage.html", {"user": username, "projects": project_list})
