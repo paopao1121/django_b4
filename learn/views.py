@@ -40,16 +40,7 @@ def event_manege(request):
     return render(request, "event_manage.html", {"user": username, "events": event_list})
 
 
-# 发布会名称搜索
-@login_required
-def search_name(request):
-    username = request.session.get('user', '')
-    search_name = request.GET.get("name", "")
-    print(username)
-    print(search_name)
-    event_list = Event.objects.filter(name__contains=search_name)
-    print(event_list)
-    return render(request, "event_manage.html", {"user": username, "events": event_list})
+
 
 
 # 嘉宾管理
@@ -141,11 +132,24 @@ def project_manage(request):
 
 # 项目搜索
 @login_required
+def search_project(request):
+    username = request.session.get('user', '')
+    search_project = request.GET.get("project_name", "")
+    print(username)
+    print(search_project)
+    project_list = ProjectInfo.objects.filter(project_name__contains=search_project)
+    # 修改project_name__contains，为搜索字段的名字
+    print(project_list)
+    return render(request, "project_manage.html", {"user": username, "projects": project_list})
+
+
+# 发布会名称搜索
+@login_required
 def search_name(request):
     username = request.session.get('user', '')
     search_name = request.GET.get("name", "")
     print(username)
     print(search_name)
-    project_list = ProjectInfo.objects.filter(name__contains=search_name)
-    print(project_list)
-    return render(request, "project_manage.html", {"user": username, "projects": project_list})
+    event_list = Event.objects.filter(name__contains=search_name)
+    print(event_list)
+    return render(request, "event_manage.html", {"user": username, "events": event_list})

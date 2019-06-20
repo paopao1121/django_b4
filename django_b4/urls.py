@@ -32,5 +32,5 @@ urlpatterns = [
     path('search_guest/', views.search_guest),                                      # 搜索嘉宾
 
     path('project_manage/', views.project_manage),                                  # 项目管理
-    path('search_project/', views.project_manage),                                  # 项目搜索
+    path('search_project/', views.search_project),                                  # 项目搜索
 ]
