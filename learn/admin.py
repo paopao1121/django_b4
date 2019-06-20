@@ -1,5 +1,5 @@
 from django.contrib import admin
-from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule
+from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase
 
 # Register your models here.
 
@@ -44,9 +44,16 @@ class PublicRuleAdmin(admin.ModelAdmin):
     list_filter = ['validate_state']
 
 
+class PublicCaseAdmin(admin.ModelAdmin):
+    list_display = ['case_name', 'field_id', 'rule_id', 'version', 'create_time', 'validate_state']
+    search_fields = ['case_name', 'field_id', 'rule_id']
+    list_filter = ['validate_state']
+
+
 admin.site.register(Event, EventAdmin)      # 需要注册EventAdmin, GuestAdmin才能显示多栏位
 admin.site.register(Guest, GuestAdmin)
 admin.site.register(ProjectInfo, ProjectInfoAdmin)                  # 注册项目信息ProjectInfoAdmin，才可以直接在后台进行管理
 admin.site.register(InterfaceInfo, InterfaceInfoAdmin)              # 注册接口信息InterfaceInfoAdmin，才可以直接在后台进行管理
 admin.site.register(InterfaceField, InterfaceFieldAdmin)            # 注册接口字段信息InterfaceField，才可以直接在后台进行管理
 admin.site.register(PublicRule, PublicRuleAdmin)                    # 注册公共规则PublicRule，才可以直接在后台进行管理
+admin.site.register(PublicCase, PublicCaseAdmin)                    # 注册公共规则PublicCase，才可以直接在后台进行管理

@@ -59,8 +59,8 @@ class InterfaceInfo(models.Model):
     headers_content_one = models.CharField(max_length=1000, verbose_name='请求报文头内容1')
     headers_label_two = models.CharField(max_length=50, verbose_name='请求报文头标签2', blank=True)
     headers_content_two = models.CharField(max_length=1000, verbose_name='请求报文头内容2', blank=True)
-    request_json = models.CharField(max_length=4000, verbose_name='请求报文模板', blank=True)
-    response_json = models.CharField(max_length=4000, verbose_name='响应报文模板', blank=True)
+    request_json = models.TextField(max_length=4000, verbose_name='请求报文模板', blank=True)
+    response_json = models.TextField(max_length=4000, verbose_name='响应报文模板', blank=True)
     remarks = models.CharField(max_length=200, verbose_name='备注', blank=True)
     create_time = models.DateTimeField(auto_now=True)                           # 创建时间，自动获取当前时间
     validate_state = models.BooleanField(verbose_name='是否有效')               # 数据有效性(1：有效，0：无效)
@@ -113,3 +113,19 @@ class PublicRule(models.Model):
 
     def __str__(self):
         return self.rules_name
+
+
+# 公共用例表
+class PublicCase(models.Model):
+    field_id = models.ForeignKey(InterfaceField, on_delete=models.CASCADE)
+    rule_id = models.ForeignKey(PublicRule, on_delete=models.CASCADE)
+    case_name = models.CharField(max_length=100, verbose_name='用例名称', blank=True)
+    request_json = models.TextField(max_length=4000, verbose_name='请求报文', blank=True)
+    response_json = models.TextField(max_length=4000, verbose_name='响应报文', blank=True)
+    version = models.CharField(max_length=10, verbose_name='用例版本号', blank=True)
+    remarks = models.CharField(max_length=200, verbose_name='备注', blank=True)
+    validate_state = models.BooleanField(verbose_name='是否有效')
+    create_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.case_name
