@@ -160,3 +160,16 @@ class BatchCase(models.Model):
 
     def __str__(self):
         return self.id
+
+
+# 应用服务器信息表
+class AppServer(models.Model):
+    server_name = models.CharField(max_length=64, verbose_name='服务器名称', blank=True, null=True)
+    server_ip = models.CharField(max_length=16, verbose_name='服务器IP', blank=True, null=True)
+    server_port = models.CharField(max_length=6, verbose_name='服务器端口', blank=True, null=True)
+    validate_state = models.BooleanField(verbose_name='是否有效')
+    create_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.server_name
+

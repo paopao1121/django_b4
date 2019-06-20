@@ -1,5 +1,7 @@
 from django.contrib import admin
-from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase, BatchJob, BatchCase
+from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField
+from learn.models import PublicRule, PublicCase, BatchJob, BatchCase
+from learn.models import AppServer
 
 # Register your models here.
 
@@ -62,6 +64,12 @@ class BatchCaseAdmin(admin.ModelAdmin):
     list_filter = ['validate_state']
 
 
+class AppServerAdmin(admin.ModelAdmin):
+    list_display = ['id', 'server_name', 'server_ip', 'server_port', 'create_time']
+    search_fields = ['server_name']
+    list_filter = ['validate_state']
+
+
 admin.site.register(Event, EventAdmin)      # 需要注册EventAdmin, GuestAdmin才能显示多栏位
 admin.site.register(Guest, GuestAdmin)
 admin.site.register(ProjectInfo, ProjectInfoAdmin)                  # 注册项目信息ProjectInfoAdmin，才可以直接在后台进行管理
@@ -71,3 +79,4 @@ admin.site.register(PublicRule, PublicRuleAdmin)                    # 注册公�
 admin.site.register(PublicCase, PublicCaseAdmin)                    # 注册公共规则PublicCase，才可以直接在后台进行管理
 admin.site.register(BatchJob, BatchJobAdmin)                        # 注册批次任务PublicCase，才可以直接在后台进行管理
 admin.site.register(BatchCase, BatchCaseAdmin)                        # 注册批次用例BatchCase，才可以直接在后台进行管理
+admin.site.register(AppServer, AppServerAdmin)                        # 注册批次用例BatchCase，才可以直接在后台进行管理
