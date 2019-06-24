@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase
+from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase, BatchJob
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 # Create your views here.
@@ -289,7 +289,7 @@ def public_case(request):
     return render(request, "public_case.html", {"user": username, "public_cases": contacts})
 
 
-# 公共规则查询
+# 公共用例查询
 @login_required
 def search_public_case(request):
     username = request.session.get('user', '')
@@ -306,3 +306,41 @@ def search_public_case(request):
         # 如果page不在范围，取最后一页面数据
         contacts = paginator.page(paginator.num_pages)
     return render(request, "public_case.html", {"user": username, "public_cases": contacts})
+
+
+# 批次任务管理
+@login_required
+def batch_job(request):
+    job_list = BatchJob.objects.all()
+    # username = request.COOKIES.get('user', '')  # 读取浏览器cookie
+    username = request.session.get('user', '')  # 读取浏览器session
+    paginator = Paginator(job_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "batch_job.html", {"user": username, "jobs": contacts})
+
+
+# 公共用例查询
+@login_required
+def search_job(request):
+    username = request.session.get('user', '')
+    search_job = request.GET.get("job_id", "")
+    job_list = BatchJob.objects.filter(job_id__contains=search_job)
+    paginator = Paginator(job_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "batch_job.html", {"user": username, "jobs": contacts})

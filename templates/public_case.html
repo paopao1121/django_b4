@@ -20,6 +20,7 @@
                         <li><a href="/field_manage/">字段管理</a></li>
                         <li><a href="/public_rule/">公共规则</a></li>
                         <li class="active"><a href="#">公共用例</a></li>
+                        <li><a href="/batch_job/">批次任务管理</a></li>
                         <li><a href="/event_manage/">发布会</a></li>
                         <li><a href="/guest_manage/">嘉宾</a></li>
                     </ul>
@@ -62,14 +63,14 @@
                     <tbody>
                         {% for public_case in public_cases %}
                             <tr>
-                                <td>{{ public_cases.id }}</td>
-                                <td>{{ public_cases.field_id }}</td>
-                                <td>{{ public_cases.rule_id }}</td>
-                                <td>{{ public_cases.case_name }}</td>
-                                <td>{{ public_cases.request_json }}</td>
-                                <td>{{ public_cases.response_json }}</td>
-                                <td>{{ public_cases.version }}</td>
-                                <th>{{ public_cases.create_time }}</th>
+                                <td>{{ public_case.id }}</td>
+                                <td>{{ public_case.field_id }}</td>
+                                <td>{{ public_case.rule_id }}</td>
+                                <td>{{ public_case.case_name }}</td>
+                                <td>{{ public_case.request_json }}</td>
+                                <td>{{ public_case.response_json }}</td>
+                                <td>{{ public_case.version }}</td>
+                                <th>{{ public_case.create_time }}</th>
                             </tr>
                         {% endfor %}
                     </tbody>
