@@ -49,6 +49,6 @@ urlpatterns = [
     path('batch_job/', views.batch_job),                                            # 批次任务管理
     path('search_job/', views.search_job),                                          # 批次任务搜索
 
-    path('batch_case/', views.batch_case),                                          # 批次任务管理
-    path('search_case/', views.search_case),                                        # 批次任务搜索
+    path('batch_case/', views.batch_case),                                          # 批次用例管理
+    path('search_case/', views.search_case),                                        # 批次用例搜索
 ]

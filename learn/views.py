@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase, BatchJob
+from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase, BatchJob, BatchCase
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 # Create your views here.
@@ -138,9 +138,18 @@ def sign_index_action(request, eid):
 @login_required
 def project_manage(request):
     project_list = ProjectInfo.objects.all()
-    # username = request.COOKIES.get('user', '')  # 读取浏览器cookie
     username = request.session.get('user', '')  # 读取浏览器session
-    return render(request, "project_manage.html", {"user": username, "projects": project_list})
+    paginator = Paginator(project_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "project_manage.html", {"user": username, "projects": contacts})
 
 
 # 项目搜索
@@ -148,12 +157,18 @@ def project_manage(request):
 def search_project(request):
     username = request.session.get('user', '')
     search_project = request.GET.get("project_name", "")
-    print(username)
-    print(search_project)
     project_list = ProjectInfo.objects.filter(project_name__contains=search_project)
-    # 修改project_name__contains，为搜索字段的名字
-    print(project_list)
-    return render(request, "project_manage.html", {"user": username, "projects": project_list})
+    paginator = Paginator(project_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "project_manage.html", {"user": username, "projects": contacts})
 
 
 # 接口管理
@@ -327,7 +342,7 @@ def batch_job(request):
     return render(request, "batch_job.html", {"user": username, "jobs": contacts})
 
 
-# 公共用例查询
+# 批次任务查询
 @login_required
 def search_job(request):
     username = request.session.get('user', '')
@@ -344,3 +359,41 @@ def search_job(request):
         # 如果page不在范围，取最后一页面数据
         contacts = paginator.page(paginator.num_pages)
     return render(request, "batch_job.html", {"user": username, "jobs": contacts})
+
+
+# 批次用例管理
+@login_required
+def batch_case(request):
+    case_list = BatchCase.objects.all()
+    # username = request.COOKIES.get('user', '')  # 读取浏览器cookie
+    username = request.session.get('user', '')  # 读取浏览器session
+    paginator = Paginator(case_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "batch_case.html", {"user": username, "cases": contacts})
+
+
+# 批次用例查询
+@login_required
+def search_case(request):
+    username = request.session.get('user', '')
+    search_case = request.GET.get("case_name", "")
+    case_list = BatchJob.objects.filter(case_name__contains=search_case)
+    paginator = Paginator(case_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "batch_case.html", {"user": username, "cases": contacts})

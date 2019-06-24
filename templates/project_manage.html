@@ -21,6 +21,7 @@
                         <li><a href="/public_rule/">公共规则</a></li>
                         <li><a href="/public_case/">公共用例</a></li>
                         <li><a href="/batch_job/">批次任务管理</a></li>
+                        <li><a href="/batch_case/">批次用例管理</a></li>
                         <li><a href="/event_manage/">发布会</a></li>
                         <li><a href="/guest_manage/">嘉宾</a></li>
                     </ul>
@@ -70,6 +71,21 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <!-- 列表分页器 -->
+        <div class="paginator">
+            <span class="step-links">
+                {% if projects.has_previous %}
+                    <a href="?page={{ projects.previous_page_number }}">previous</a>
+                {% endif %}
+                    <span class="current">
+                        Page {{ projects.number }} of {{ projects.paginator.num_pages }}.
+                    </span>
+                {% if projects.has_next %}
+                    <a href="?page={{ projects.next_page_number }}">next</a>
+                {% endif %}
+            </span>
         </div>
     </body>
 </html>
