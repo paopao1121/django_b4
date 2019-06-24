@@ -1,0 +1,110 @@
+<html lang="zh-CN">
+    <head>
+        {% load bootstrap3 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <title>Public Rule</title>
+    </head>
+
+    <body role="document">
+        <!-- 导航栏 -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/project_manage/">AutoTest Engine System</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/project_manage/">项目管理</a></li>
+                        <li><a href="/interface_manage/">接口管理</a></li>
+                        <li><a href="/field_manage/">字段管理</a></li>
+                        <li class="active"><a href="#">公共规则</a></li>
+                        <li><a href="/public_case/">公共用例</a></li>
+                        <li><a href="/event_manage/">发布会</a></li>
+                        <li><a href="/guest_manage/">嘉宾</a></li>
+                    </ul>
+                      <ul class="nav navbar-nav navbar-right">
+                          <li><a href="#">{{ user }}</a></li>
+                          <li><a href="/logout/">退出</a></li>
+                     </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 公共规则搜索表单 -->
+        <div class="page-header" style="padding-top: 60px;">
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form" method="get" action="/search_rule/">
+                    <div class="form-group">
+                        <input name="rule_name" type="text" placeholder="规则名称" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">搜索</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 公共规则列表 -->
+        <div class="row" style="padding-top: 80px;">
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>规则名称</th>
+                            <th>规则类型</th>
+                            <th>数据格式</th>
+                            <th>规则描述</th>
+                            <th>正则表达式1</th>
+                            <th>正则表达式2</th>
+                            <th>正则表达式3</th>
+                            <th>正则表达式4</th>
+                            <th>正则表达式5</th>
+                            <th>正则表达式6</th>
+                            <th>正则表达式7</th>
+                            <th>正则表达式8</th>
+                            <th>正则表达式9</th>
+                            <th>正则表达式10</th>
+                            <th>创建时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rule in rules %}
+                            <tr>
+                                <td>{{ rules.id }}</td>
+                                <td>{{ rules.rules_name }}</td>
+                                <td>{{ rules.rules_type }}</td>
+                                <td>{{ rules.data_format }}</td>
+                                <td>{{ rules.rule_comment }}</td>
+                                <td>{{ rules.regexp_1 }}</td>
+                                <td>{{ rules.regexp_2 }}</td>
+                                <td>{{ rules.regexp_3 }}</td>
+                                <td>{{ rules.regexp_4 }}</td>
+                                <td>{{ rules.regexp_5 }}</td>
+                                <th>{{ rules.regexp_6 }}</th>
+                                <th>{{ rules.regexp_7 }}</th>
+                                <td>{{ rules.regexp_8 }}</td>
+                                <td>{{ rules.regexp_9 }}</td>
+                                <th>{{ rules.regexp_10 }}</th>
+                                <th>{{ rules.create_time }}</th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- 列表分页器 -->
+        <div class="paginator">
+            <span class="step-links">
+                {% if rules.has_previous %}
+                    <a href="?page={{ rules.previous_page_number }}">previous</a>
+                {% endif %}
+                    <span class="current">
+                        Page {{ rules.number }} of {{ rules.paginator.num_pages }}.
+                    </span>
+                {% if rules.has_next %}
+                    <a href="?page={{ rules.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,102 @@
+<html lang="zh-CN">
+    <head>
+        {% load bootstrap3 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <title>Field Manage</title>
+    </head>
+
+    <body role="document">
+        <!-- 导航栏 -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/project_manage/">AutoTest Engine System</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/project_manage/">项目管理</a></li>
+                        <li><a href="/interface_manage/">接口管理</a></li>
+                        <li class="active"><a href="#">字段管理</a></li>
+                        <li><a href="/public_rule/">公共规则</a></li>
+                        <li><a href="/public_case/">公共用例</a></li>
+                        <li><a href="/event_manage/">发布会</a></li>
+                        <li><a href="/guest_manage/">嘉宾</a></li>
+                    </ul>
+                      <ul class="nav navbar-nav navbar-right">
+                          <li><a href="#">{{ user }}</a></li>
+                          <li><a href="/logout/">退出</a></li>
+                     </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 字段管理搜索表单 -->
+        <div class="page-header" style="padding-top: 60px;">
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form" method="get" action="/search_field/">
+                    <div class="form-group">
+                        <input name="field_name" type="text" placeholder="字段名称" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">搜索</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 接口字段列表 -->
+        <div class="row" style="padding-top: 80px;">
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>接口编码</th>
+                            <th>接口字段</th>
+                            <th>字段名称</th>
+                            <th>数据类型</th>
+                            <th>字段长度</th>
+                            <th>归属LIST</th>
+                            <th>归属DICT</th>
+                            <th>依赖字段</th>
+                            <th>依赖值</th>
+                            <th>是否可空</th>
+                            <th>固定值</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for field in fields %}
+                            <tr>
+                                <td>{{ field.id }}</td>
+                                <td>{{ field.interface }}</td>
+                                <td>{{ field.field_value }}</td>
+                                <td>{{ field.field_name }}</td>
+                                <td>{{ field.type }}</td>
+                                <td>{{ field.length }}</td>
+                                <td>{{ field.belong_list }}</td>
+                                <td>{{ field.belong_dict }}</td>
+                                <td>{{ field.dependent_field }}</td>
+                                <td>{{ field.dependent_value }}</td>
+                                <th>{{ field.is_null }}</th>
+                                <th>{{ field.default_value }}</th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- 列表分页器 -->
+        <div class="paginator">
+            <span class="step-links">
+                {% if fields.has_previous %}
+                    <a href="?page={{ fields.previous_page_number }}">previous</a>
+                {% endif %}
+                    <span class="current">
+                        Page {{ fields.number }} of {{ fields.paginator.num_pages }}.
+                    </span>
+                {% if fields.has_next %}
+                    <a href="?page={{ fields.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    </body>
+</html>
