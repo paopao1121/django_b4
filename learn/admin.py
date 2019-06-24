@@ -33,8 +33,7 @@ class InterfaceInfoAdmin(admin.ModelAdmin):
 
 class InterfaceFieldAdmin(admin.ModelAdmin):
     list_display = ['interface', 'field_value', 'field_name', 'type', 'length', 'belong_list',
-                    'belong_dict', 'dependent_field', 'dependent_value', 'is_null', 'default_value',
-                    'remarks', 'create_time']
+                    'belong_dict', 'dependent_field', 'dependent_value', 'is_null', 'default_value']
     search_fields = ['interface_code', 'field_value', 'field_name', 'interface']
     list_filter = ['validate_state']
 
