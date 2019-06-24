@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField
+from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 # Create your views here.
@@ -230,3 +230,41 @@ def search_field(request):
         # 如果page不在范围，取最后一页面数据
         contacts = paginator.page(paginator.num_pages)
     return render(request, "field_manage.html", {"user": username, "fields": contacts})
+
+
+# 公共规则管理
+@login_required
+def public_rule(request):
+    rule_list = PublicRule.objects.all()
+    # username = request.COOKIES.get('user', '')  # 读取浏览器cookie
+    username = request.session.get('user', '')  # 读取浏览器session
+    paginator = Paginator(rule_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "public_rule.html", {"user": username, "rules": contacts})
+
+
+# 公共规则查询
+@login_required
+def search_rule(request):
+    username = request.session.get('user', '')
+    search_rule = request.GET.get("rule_name", "")
+    rule_list = PublicRule.objects.filter(rule_name__contains=search_rule)
+    paginator = Paginator(rule_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "public_rule.html", {"user": username, "rules": contacts})

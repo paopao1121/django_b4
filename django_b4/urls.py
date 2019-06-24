@@ -20,7 +20,7 @@ from learn import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', views.index),                                                          # 效果一样
+    path('index/', views.index),                                                    # 效果一样
     path('login_action/', views.login_action),                                      # 登录动作
     path('logout/', views.logout),                                                  # 退出
     url(r'^sign_index_action/(?P<eid>[0-9]+)/$', views.sign_index_action),          # 签到
@@ -39,4 +39,10 @@ urlpatterns = [
 
     path('field_manage/', views.field_manage),                                      # 接口字段管理
     path('search_field/', views.search_field),                                      # 接口字段搜索
+
+    path('public_rule/', views.public_rule),                                        # 公共规则管理
+    path('search_rule/', views.search_rule),                                        # 公共规则搜索
+
+    path('public_case/', views.public_case),                                        # 公共用例管理
+    path('search_public_case/', views.search_public_case),                          # 公共用例搜索
 ]
