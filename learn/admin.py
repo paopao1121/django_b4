@@ -28,14 +28,14 @@ class InterfaceInfoAdmin(admin.ModelAdmin):
     list_display = ['project', 'interface_code', 'interface_name', 'interface_type', 'request_type', 'byref_type',
                     'request_url', 'remarks', 'create_time']
     search_fields = ['interface_code', 'interface_name', 'project']
-    list_filter = ['validate_state']
+    list_filter = ['validate_state', 'project']
 
 
 class InterfaceFieldAdmin(admin.ModelAdmin):
     list_display = ['interface', 'field_value', 'field_name', 'type', 'length', 'belong_list',
                     'belong_dict', 'dependent_field', 'dependent_value', 'is_null', 'default_value']
     search_fields = ['interface_code', 'field_value', 'field_name', 'interface']
-    list_filter = ['validate_state']
+    list_filter = ['validate_state', 'interface']
 
 
 class PublicRuleAdmin(admin.ModelAdmin):

@@ -39,7 +39,7 @@ def logout(request):
     response = HttpResponseRedirect('/index/')
     return response
 
-
+'''
 # 发布会管理
 @login_required
 def event_manege(request):
@@ -132,6 +132,7 @@ def sign_index_action(request, eid):
     else:
         Guest.objects.filter(phone=phone, event_id=eid).update(sign='1')
         return render(request, 'sign_index.html', {'event': event, 'hint': 'sign in.success.', 'guest': result})
+'''
 
 
 # 项目管理
