@@ -418,7 +418,7 @@ def server_manage(request):
     return render(request, "server_manage.html", {"user": username, "servers": contacts})
 
 
-# 批次用例查询
+# 服务器查询
 @login_required
 def search_server(request):
     username = request.session.get('user', '')
@@ -434,4 +434,4 @@ def search_server(request):
     except EmptyPage:
         # 如果page不在范围，取最后一页面数据
         contacts = paginator.page(paginator.num_pages)
-    return render(request, "batch_case.html", {"user": username, "servers": contacts})
+    return render(request, "server_manage.html", {"user": username, "servers": contacts})
