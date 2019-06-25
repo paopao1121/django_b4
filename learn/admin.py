@@ -22,6 +22,9 @@ class ProjectInfoAdmin(admin.ModelAdmin):
     list_display = ['project_name', 'parent_id', 'project_type', 'create_time']
     search_fields = ['project_name']
     list_filter = ['validate_state']
+    ordering = ['create_time']      # 排序
+    list_per_page = 20      # 分页功能
+    # ordering = ('-id',)     # 排序功能
 
 
 class InterfaceInfoAdmin(admin.ModelAdmin):
@@ -29,6 +32,8 @@ class InterfaceInfoAdmin(admin.ModelAdmin):
                     'request_url', 'remarks', 'create_time']
     search_fields = ['interface_code', 'interface_name', 'project']
     list_filter = ['validate_state', 'project']
+    list_per_page = 20      # 分页功能
+    ordering = ('-id',)     # 排序功能
 
 
 class InterfaceFieldAdmin(admin.ModelAdmin):
@@ -36,6 +41,8 @@ class InterfaceFieldAdmin(admin.ModelAdmin):
                     'belong_dict', 'dependent_field', 'dependent_value', 'is_null', 'default_value']
     search_fields = ['interface_code', 'field_value', 'field_name', 'interface']
     list_filter = ['validate_state', 'interface']
+    list_per_page = 20      # 分页功能
+    ordering = ('-id',)     # 排序功能
 
 
 class PublicRuleAdmin(admin.ModelAdmin):
@@ -43,30 +50,40 @@ class PublicRuleAdmin(admin.ModelAdmin):
                     'remarks', 'create_time']
     search_fields = ['rules_name', 'rules_type', 'data_format']
     list_filter = ['validate_state']
+    list_per_page = 20      # 分页功能
+    ordering = ('-id',)     # 排序功能
 
 
 class PublicCaseAdmin(admin.ModelAdmin):
     list_display = ['case_name', 'field_id', 'rule_id', 'version', 'create_time']
     search_fields = ['case_name', 'field_id', 'rule_id']
     list_filter = ['validate_state']
+    list_per_page = 20      # 分页功能
+    ordering = ('-id',)     # 排序功能
 
 
 class BatchJobAdmin(admin.ModelAdmin):
     list_display = ['id', 'batch_status', 'start_time', 'finish_time', 'execute_frequency', 'create_time']
     search_fields = ['case_name', 'field_id', 'rule_id']
     list_filter = ['validate_state']
+    list_per_page = 20      # 分页功能
+    ordering = ('-id',)     # 排序功能
 
 
 class BatchCaseAdmin(admin.ModelAdmin):
     list_display = ['id', 'case_status', 'public_case_id', 'job_id', 'request_json', 'response_json', 'create_time']
     search_fields = ['id', 'case_status', 'public_case_id', 'job_id']
     list_filter = ['validate_state']
+    list_per_page = 20      # 分页功能
+    ordering = ('-id',)     # 排序功能
 
 
 class AppServerAdmin(admin.ModelAdmin):
     list_display = ['id', 'server_name', 'server_ip', 'server_port', 'create_time']
     search_fields = ['server_name']
     list_filter = ['validate_state']
+    list_per_page = 20      # 分页功能
+    ordering = ('-id',)     # 排序功能
 
 
 admin.site.site_title = "自动化引擎平台"   # 后台系统标题显示
