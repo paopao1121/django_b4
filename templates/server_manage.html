@@ -3,7 +3,7 @@
         {% load bootstrap3 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
-        <title>Public Case</title>
+        <title>Server Manage</title>
     </head>
 
     <body role="document">
@@ -19,10 +19,10 @@
                         <li><a href="/interface_manage/">接口管理</a></li>
                         <li><a href="/field_manage/">字段管理</a></li>
                         <li><a href="/public_rule/">公共规则</a></li>
-                        <li class="active"><a href="#">公共用例</a></li>
+                        <li><a href="/public_case/">公共用例</a></li>
                         <li><a href="/batch_job/">批次任务管理</a></li>
                         <li><a href="/batch_case/">批次用例管理</a></li>
-                        <li><a href="/server_manage/">服务器管理</a></li>
+                        <li class="active"><a href="#">服务器管理</a></li>
                         <li><a href="/event_manage/">发布会</a></li>
                         <li><a href="/guest_manage/">嘉宾</a></li>
                     </ul>
@@ -34,45 +34,39 @@
             </div>
         </nav>
 
-        <!-- 公共用例搜索表单 -->
+        <!-- 服务器搜索表单 -->
         <div class="page-header" style="padding-top: 60px;">
             <div id="navbar" class="navbar-collapse collapse">
-                <form class="navbar-form" method="get" action="/search_public_case/">
+                <form class="navbar-form" method="get" action="/search_server/">
                     <div class="form-group">
-                        <input name="case_name" type="text" placeholder="用例名称" class="form-control">
+                        <input name="server_name" type="text" placeholder="服务器名称" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-success">搜索</button>
                 </form>
             </div>
         </div>
 
-        <!-- 公共用例列表 -->
+        <!-- 服务器列表 -->
         <div class="row" style="padding-top: 80px;">
             <div class="col-md-6">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>id</th>
-                            <th>字段名称</th>
-                            <th>规则编号</th>
-                            <th>用例名称</th>
-                            <th>请求报文</th>
-                            <th>响应报文</th>
-                            <th>版本</th>
+                            <th>服务器名称</th>
+                            <th>服务器IP</th>
+                            <th>服务器端口</th>
                             <th>创建时间</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for public_case in public_cases %}
+                        {% for server in servers %}
                             <tr>
-                                <td>{{ public_case.id }}</td>
-                                <td>{{ public_case.field_id }}</td>
-                                <td>{{ public_case.rule_id }}</td>
-                                <td>{{ public_case.case_name }}</td>
-                                <td>{{ public_case.request_json }}</td>
-                                <td>{{ public_case.response_json }}</td>
-                                <td>{{ public_case.version }}</td>
-                                <th>{{ public_case.create_time }}</th>
+                                <td>{{ server.id }}</td>
+                                <td>{{ server.server_name }}</td>
+                                <td>{{ server.server_ip }}</td>
+                                <td>{{ server.server_port }}</td>
+                                <th>{{ server.create_time }}</th>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -82,14 +76,14 @@
         <!-- 列表分页器 -->
         <div class="paginator">
             <span class="step-links">
-                {% if public_cases.has_previous %}
-                    <a href="?page={{ public_cases.previous_page_number }}">previous</a>
+                {% if servers.has_previous %}
+                    <a href="?page={{ servers.previous_page_number }}">previous</a>
                 {% endif %}
                     <span class="current">
-                        Page {{ public_cases.number }} of {{ public_cases.paginator.num_pages }}.
+                        Page {{ servers.number }} of {{ servers.paginator.num_pages }}.
                     </span>
-                {% if public_cases.has_next %}
-                    <a href="?page={{ public_cases.next_page_number }}">next</a>
+                {% if servers.has_next %}
+                    <a href="?page={{ servers.next_page_number }}">next</a>
                 {% endif %}
             </span>
         </div>

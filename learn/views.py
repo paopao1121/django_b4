@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase, BatchJob, BatchCase
+from learn.models import Event, Guest, ProjectInfo, InterfaceInfo, InterfaceField, PublicRule, PublicCase, BatchJob, BatchCase, AppServer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 # Create your views here.
@@ -26,7 +26,7 @@ def login_action(request):
             # return HttpResponseRedirect('/event_manage/')
             # response.set_cookie('user', username, 3600)    # 添加浏览器cookie
             request.session['user'] = username  # 读取浏览器session
-            response = HttpResponseRedirect('/event_manage/')
+            response = HttpResponseRedirect('/project_manage/')
             return response
         else:
             return render(request, 'index.html', {'error': 'username or password error!'})
@@ -397,3 +397,41 @@ def search_case(request):
         # 如果page不在范围，取最后一页面数据
         contacts = paginator.page(paginator.num_pages)
     return render(request, "batch_case.html", {"user": username, "cases": contacts})
+
+
+# 服务器管理
+@login_required
+def server_manage(request):
+    server_list = AppServer.objects.all()
+    # username = request.COOKIES.get('user', '')  # 读取浏览器cookie
+    username = request.session.get('user', '')  # 读取浏览器session
+    paginator = Paginator(server_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "server_manage.html", {"user": username, "servers": contacts})
+
+
+# 批次用例查询
+@login_required
+def search_server(request):
+    username = request.session.get('user', '')
+    search_server = request.GET.get("server_name", "")
+    case_list = AppServer.objects.filter(server_name__contains=search_server)
+    paginator = Paginator(case_list, 10)                                                    # 创建每页5条数据的分页器
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，取第一页面数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围，取最后一页面数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, "batch_case.html", {"user": username, "servers": contacts})

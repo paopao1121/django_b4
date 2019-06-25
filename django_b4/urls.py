@@ -51,4 +51,7 @@ urlpatterns = [
 
     path('batch_case/', views.batch_case),                                          # 批次用例管理
     path('search_case/', views.search_case),                                        # 批次用例搜索
+
+    path('server_manage/', views.server_manage),                                    # 批次用例管理
+    path('search_server/', views.search_server),                                    # 批次用例搜索
 ]
