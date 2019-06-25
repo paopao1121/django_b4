@@ -69,13 +69,16 @@ class AppServerAdmin(admin.ModelAdmin):
     list_filter = ['validate_state']
 
 
-admin.site.register(Event, EventAdmin)      # 需要注册EventAdmin, GuestAdmin才能显示多栏位
-admin.site.register(Guest, GuestAdmin)
+admin.site.site_title = "自动化引擎平台"   # 后台系统标题显示
+admin.site.site_header = "自动化引擎平台"  # 后台系统登录页标题显示
+admin.site.index_title = "自动化引擎平台"  # 后台系统列表上方标题显示
+admin.site.register(Event, EventAdmin)                              # 注册发布会EventAdmin, 才可以直接在后台进行管理
+admin.site.register(Guest, GuestAdmin)                              # 注册嘉宾GuestAdmin, 才可以直接在后台进行管理
 admin.site.register(ProjectInfo, ProjectInfoAdmin)                  # 注册项目信息ProjectInfoAdmin，才可以直接在后台进行管理
 admin.site.register(InterfaceInfo, InterfaceInfoAdmin)              # 注册接口信息InterfaceInfoAdmin，才可以直接在后台进行管理
 admin.site.register(InterfaceField, InterfaceFieldAdmin)            # 注册接口字段信息InterfaceField，才可以直接在后台进行管理
 admin.site.register(PublicRule, PublicRuleAdmin)                    # 注册公共规则PublicRule，才可以直接在后台进行管理
 admin.site.register(PublicCase, PublicCaseAdmin)                    # 注册公共规则PublicCase，才可以直接在后台进行管理
 admin.site.register(BatchJob, BatchJobAdmin)                        # 注册批次任务PublicCase，才可以直接在后台进行管理
-admin.site.register(BatchCase, BatchCaseAdmin)                        # 注册批次用例BatchCase，才可以直接在后台进行管理
-admin.site.register(AppServer, AppServerAdmin)                        # 注册批次用例BatchCase，才可以直接在后台进行管理
+admin.site.register(BatchCase, BatchCaseAdmin)                      # 注册批次用例BatchCase，才可以直接在后台进行管理
+admin.site.register(AppServer, AppServerAdmin)                      # 注册批次用例BatchCase，才可以直接在后台进行管理

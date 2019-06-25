@@ -20,6 +20,7 @@ from learn import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.project_manage),
     path('index/', views.index),                                                    # 效果一样
     path('login_action/', views.login_action),                                      # 登录动作
     path('logout/', views.logout),                                                  # 退出
