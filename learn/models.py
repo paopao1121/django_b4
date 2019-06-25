@@ -45,6 +45,10 @@ class ProjectInfo(models.Model):
     def __str__(self):
         return self.project_name
 
+    class Meta:
+        verbose_name = '项目'               # 点击verbose_name_plural进入详情页后，显示的标题
+        verbose_name_plural = '项目管理'    # admin页app下列表展示
+
 
 # 接口信息表
 class InterfaceInfo(models.Model):
@@ -68,6 +72,10 @@ class InterfaceInfo(models.Model):
     def __str__(self):
         return self.interface_code
 
+    class Meta:
+        verbose_name = '接口'
+        verbose_name_plural = '接口管理'
+
 
 # 接口字段表
 class InterfaceField(models.Model):
@@ -89,6 +97,10 @@ class InterfaceField(models.Model):
 
     def __str__(self):
         return self.field_value
+
+    class Meta:
+        verbose_name = '接口字段'
+        verbose_name_plural = '接口字段管理'
 
 
 # 公共规则表
@@ -114,6 +126,10 @@ class PublicRule(models.Model):
     def __str__(self):
         return self.rules_name
 
+    class Meta:
+        verbose_name = '公共规则'
+        verbose_name_plural = '公共规则管理'
+
 
 # 公共用例表
 class PublicCase(models.Model):
@@ -130,6 +146,10 @@ class PublicCase(models.Model):
     def __str__(self):
         return self.case_name
 
+    class Meta:
+        verbose_name = '公共用例'
+        verbose_name_plural = '公共用例管理'
+
 
 # 批次任务表
 class BatchJob(models.Model):
@@ -144,6 +164,10 @@ class BatchJob(models.Model):
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        verbose_name = '批次任务'
+        verbose_name_plural = '批次任务管理'
 
 
 # 批次用例表
@@ -161,6 +185,10 @@ class BatchCase(models.Model):
     def __str__(self):
         return self.id
 
+    class Meta:
+        verbose_name = '批次用例'
+        verbose_name_plural = '批次用例管理'
+
 
 # 应用服务器信息表
 class AppServer(models.Model):
@@ -173,3 +201,6 @@ class AppServer(models.Model):
     def __str__(self):
         return self.server_name
 
+    class Meta:
+        verbose_name = '应用服务器'
+        verbose_name_plural = '应用服务器管理'
